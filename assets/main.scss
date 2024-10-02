@@ -3,3 +3,11 @@
 body {
   background-color: $background-dark;
 }
+
+// functional classes
+.primary-text {
+    color: $text-primary;
+}
+.accent-text {
+    color: $accent;
+}

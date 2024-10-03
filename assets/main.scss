@@ -1,12 +1,20 @@
 @use "/assets/_colors.scss" as *;
 
+// fonts import
 @font-face {
   font-family: 'Roboto-Bold';
   src: url(/fonts/Roboto-Bold.ttf);
 }
+@font-face {
+  font-family: 'Roboto-Medium';
+  src: url(/fonts/Roboto-Bold.ttf);
+}
+
+// general style
 body {
   background-color: $background-dark;
   font-family: 'Roboto-Regular';
+  font-size: 14px;
 }
 
 h1 {
@@ -27,4 +35,21 @@ h3 {
 }
 .text-accent {
   color: $accent;
+}
+.text-button {
+  color: $text-button;
+}
+.btn-style {
+  --b: 2px;   /* thickness of the border */
+  --c: #01F0FF;   /* color of the border */
+  --w: 15px;  /* width of border */
+  
+  border: var(--b) solid #0000; /* space for the border */
+  --_g: #0000 90deg,var(--c) 0;
+  --_p: var(--w) var(--w) border-box no-repeat;
+  background:
+    conic-gradient(from 90deg  at top    var(--b) left  var(--b),var(--_g)) 0    0    / var(--_p),
+    // conic-gradient(from 180deg at top    var(--b) right var(--b),var(--_g)) 100% 0    / var(--_p),
+    // conic-gradient(from 0deg   at bottom var(--b) left  var(--b),var(--_g)) 0    100% / var(--_p),
+    conic-gradient(from -90deg at bottom var(--b) right var(--b),var(--_g)) 100% 100% / var(--_p);
 }

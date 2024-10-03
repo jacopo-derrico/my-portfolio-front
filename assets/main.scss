@@ -1,13 +1,30 @@
-@use "~/assets/_colors.scss" as *;
+@use "/assets/_colors.scss" as *;
 
+@font-face {
+  font-family: 'Roboto-Bold';
+  src: url(/fonts/Roboto-Bold.ttf);
+}
 body {
   background-color: $background-dark;
+  font-family: 'Roboto-Regular';
+}
+
+h1 {
+  font-family: Roboto-Bold;
+  font-size: 40px;
+}
+h3 {
+  font-family: RobotoMono;
+  font-size: 26px;
 }
 
 // functional classes
-.primary-text {
-    color: $text-primary;
+.text-primary {
+  color: $text-primary;
 }
-.accent-text {
-    color: $accent;
+.text-secondary {
+  color: $text-secondary;
+}
+.text-accent {
+  color: $accent;
 }

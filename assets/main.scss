@@ -25,6 +25,10 @@ h3 {
   font-family: RobotoMono;
   font-size: 26px;
 }
+h6 {
+  font-family: RobotoMono;
+  font-size: 20px;
+}
 
 // functional classes
 .text-primary {
@@ -39,6 +43,9 @@ h3 {
 .text-button {
   color: $text-button;
 }
+.secondary-font {
+  font-family: RobotoMono;
+}
 .btn-style {
   --b: 2px;   /* thickness of the border */
   --c: #01F0FF;   /* color of the border */
@@ -52,4 +59,20 @@ h3 {
     // conic-gradient(from 180deg at top    var(--b) right var(--b),var(--_g)) 100% 0    / var(--_p),
     // conic-gradient(from 0deg   at bottom var(--b) left  var(--b),var(--_g)) 0    100% / var(--_p),
     conic-gradient(from -90deg at bottom var(--b) right var(--b),var(--_g)) 100% 100% / var(--_p);
+}
+.hr-custom {
+  border-top: 2px solid $primary;
+}
+.hr-bump {
+  width: 120px;
+  height: 12px;
+  background-color: $primary;
+  margin: 0 auto;
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    85% 100%,
+    15% 100%,
+    
+  );
 }

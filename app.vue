@@ -2,7 +2,6 @@
   <div>
     <NuxtRouteAnnouncer />
     <AppHeader />
-    <HomeHero />
-    <HomeExperience />
+    <NuxtPage />
   </div>
 </template>

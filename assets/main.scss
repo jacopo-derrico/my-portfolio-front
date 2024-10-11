@@ -21,6 +21,10 @@ h1 {
   font-family: Roboto-Bold;
   font-size: 40px;
 }
+h2 {
+  font-family: RobotoMono;
+  font-size: 32px;
+}
 h3 {
   font-family: RobotoMono;
   font-size: 26px;
@@ -97,6 +101,11 @@ h6 {
   background-color: $secondary20;
   color: $secondary;
   font-size: 11px;
+}
+.technology-singlePage{
+  border: 2px solid $secondary;
+  background-color: $secondary20;
+  color: $secondary;
 }
 
 // portfolio card hover animation

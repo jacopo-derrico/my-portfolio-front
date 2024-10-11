@@ -2,7 +2,13 @@
 export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
   devtools: { enabled: true },
-  modules: ['@nuxtjs/tailwindcss', '@nuxt/fonts', '@pinia/nuxt'],
+  modules: [
+    '@nuxtjs/tailwindcss',
+    '@nuxt/fonts',
+    '@pinia/nuxt',
+    'nuxt-vuefire'
+  ],
+  ssr: true,
   css: [
     '@/assets/main.scss'
   ],
@@ -17,5 +23,19 @@ export default defineNuxtConfig({
   },
   fonts: {
     local: {},
-  }
+  },
+  vuefire: {
+    config: {
+      apiKey: "AIzaSyDq855EBxLYYtHwwDlsECP5QrJ6lu9o6OM",
+      authDomain: "my-portfolio-34fff.firebaseapp.com",
+      projectId: "my-portfolio-34fff",
+      storageBucket: "my-portfolio-34fff.appspot.com",
+      messagingSenderId: "861651541162",
+      appId: "1:861651541162:web:50e9d325bb8e6b262644d3",
+      measurementId: "G-QYQ31BDYQZ"
+    },
+    auth: {
+      enabled: true
+    },
+  },
 })

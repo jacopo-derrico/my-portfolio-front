@@ -4,7 +4,7 @@
             <h2 class="text-button lowercase mb-2">// {{ projectData.title }}</h2>
             <span v-if="projectData.date" class="text-primary secondary-font">{{ projectData.date }}</span>
             <span v-if="projectData.company" class="text-primary secondary-font">{{ projectData.company }}</span>
-            <div class="flex gap-2 mt-6">
+            <!-- <div class="flex gap-2 mt-6">
                 <span v-for="(cat, index) in projectData.categories" class="category pill-type">
                     {{ cat.name }}
                 </span>
@@ -23,7 +23,7 @@
         <div  class="flex-initial ps-8 lg:w-1/2">
             <div v-for="image in projectData.images">
                 <img class="w-full rounded-xl shadow" :src="`${portfolioStore.backUrl}/storage/${project.image_path}`" alt="">
-            </div>
+            </div> -->
         </div>
     </section>
 </template>

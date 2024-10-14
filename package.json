@@ -22,7 +22,8 @@
     "nuxt-vuefire": "^1.0.4",
     "pinia": "^2.2.4",
     "vue": "latest",
-    "vue-router": "latest"
+    "vue-router": "latest",
+    "vuefire": "^3.2.0"
   },
   "devDependencies": {
     "sass": "^1.79.4",

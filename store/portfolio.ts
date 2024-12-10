@@ -2,17 +2,17 @@ import { Title } from '#build/components';
 import { defineStore } from 'pinia';
 import axios from 'axios';
 
-export const usePortfolioStore = defineStore('portfolioStore', {
-    state: () => ({
-        projects: [], // stores all projects data from api
-        backUrl: '', // gets
-        singleProject: null,
-        singleProjectData: null,
-        isLoading: false,
-        error: ''
-    }),
-    getters: {},
-    actions: {
+export const usePortfolioStore = defineStore('portfolioStore', () => {
+    // state 
+    let projects = ref([]) // stores all projects data from api
+    let backUrl = '' // gets
+    let singleProject = null
+    let singleProjectData = null
+    let isLoading = false
+    let error = ''
+
+
+    // actions
         // async fetchProjects() {
         //     this.isLoading = true;
         //     this.error = '';
@@ -47,5 +47,14 @@ export const usePortfolioStore = defineStore('portfolioStore', {
         // setSingleProject(id: null) {
         //     this.singleProject = id
         // }
-    },
+    // },
+
+    return {
+        projects,
+        backUrl,
+        singleProject,
+        singleProjectData,
+        isLoading,
+        error
+    }
 });

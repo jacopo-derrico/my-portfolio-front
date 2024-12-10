@@ -30,10 +30,10 @@
 
     const portfolioStore = usePortfolioStore();
 
-    try {
-        portfolioStore.fetchProjects();
-    } catch (error) {
-        console.error('Error fetching projects:', error);
-    }
+    // try {
+    //     portfolioStore.fetchProjects();
+    // } catch (error) {
+    //     console.error('Error fetching projects:', error);
+    // }
 
 </script>

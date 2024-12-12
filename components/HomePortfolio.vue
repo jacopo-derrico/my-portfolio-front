@@ -25,7 +25,7 @@
 
             <NuxtLink v-for="project in portfolio.projects" :to="`/projects/${project.id}`" :key="project.id" class="relative hover-info" :onclick="portfolio.singleProject = project.id">
                 <img class="w-full h-full rounded-xl shadow"
-                    :src="`/_nuxt${project.images[0]}`" alt="">
+                    :src="`${project.images[0]}`" alt="">
                 <div class="absolute bottom-0 left-0 top-0 right-0 bg-black bg-opacity-80 flex flex-col-reverse p-4 hidden-info">
                     <div class="flex gap-2 flex-wrap">
                         <span v-for="(tag) in project.technologies" :key="tag.indexOf" class="technology pill-type">

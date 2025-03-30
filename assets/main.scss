@@ -5,6 +5,7 @@
   font-family: 'Roboto-Bold';
   src: url(/fonts/Roboto-Bold.ttf);
 }
+
 @font-face {
   font-family: 'Roboto-Medium';
   src: url(/fonts/Roboto-Bold.ttf);
@@ -21,14 +22,17 @@ h1 {
   font-family: Roboto-Bold;
   font-size: 40px;
 }
+
 h2 {
   font-family: RobotoMono;
   font-size: 32px;
 }
+
 h3 {
   font-family: RobotoMono;
   font-size: 26px;
 }
+
 h6 {
   font-family: RobotoMono;
   font-size: 20px;
@@ -38,81 +42,135 @@ h6 {
 .text-primary {
   color: $text-primary;
 }
+
 .text-secondary {
   color: $text-secondary;
 }
+
 .text-accent {
   color: $accent;
 }
+
 .text-button {
   color: $text-button;
 }
+
 .secondary-font {
   font-family: RobotoMono;
 }
 
 // buttons
 .btn-style {
-  --b: 2px;   /* thickness of the border */
-  --c: #01F0FF;   /* color of the border */
-  --w: 15px;  /* width of border */
-  
-  border: var(--b) solid #0000; /* space for the border */
-  --_g: #0000 90deg,var(--c) 0;
+  --b: 2px;
+  /* thickness of the border */
+  --c: #01F0FF;
+  /* color of the border */
+  --w: 15px;
+  /* width of border */
+
+  border: var(--b) solid #0000;
+  /* space for the border */
+  --_g: #0000 90deg, var(--c) 0;
   --_p: var(--w) var(--w) border-box no-repeat;
   background:
-    conic-gradient(from 90deg  at top    var(--b) left  var(--b),var(--_g)) 0    0    / var(--_p),
+    conic-gradient(from 90deg at top var(--b) left var(--b), var(--_g)) 0 0 / var(--_p),
     // conic-gradient(from 180deg at top    var(--b) right var(--b),var(--_g)) 100% 0    / var(--_p),
     // conic-gradient(from 0deg   at bottom var(--b) left  var(--b),var(--_g)) 0    100% / var(--_p),
-    conic-gradient(from -90deg at bottom var(--b) right var(--b),var(--_g)) 100% 100% / var(--_p);
+    conic-gradient(from -90deg at bottom var(--b) right var(--b), var(--_g)) 100% 100% / var(--_p);
 }
 
 // decoration
 .hr-custom {
   border-top: 2px solid $primary;
 }
+
 .hr-bump {
   width: 120px;
   height: 12px;
   background-color: $primary;
   margin: 0 auto;
-  clip-path: polygon(
-    0 0,
-    100% 0,
-    85% 100%,
-    15% 100%,
-    
-  );
+  clip-path: polygon(0 0,
+      100% 0,
+      85% 100%,
+      15% 100%,
+
+    );
 }
 
 // pills
-.pill-type{
+.pill-type {
   border-radius: 25px;
   width: fit-content;
   padding: 2px 5px;
 }
-.category{
+
+.category {
   border: 2px solid $accent;
   background-color: $accent20;
   color: $accent;
 }
-.technology{
+
+.technology {
   border: 2px solid $secondary;
   background-color: $secondary20;
   color: $secondary;
   font-size: 11px;
 }
-.technology-singlePage{
+
+.technology-singlePage {
   border: 2px solid $secondary;
   background-color: $secondary20;
   color: $secondary;
 }
 
 // portfolio card hover animation
-.hidden-info{
+.hidden-info {
   opacity: 0;
 }
-.hover-info:hover .hidden-info{
+
+.hover-info:hover .hidden-info {
   opacity: 100%;
   transition: opacity 0.4s ease;
+}
+
+// sidebar
+#sidebar:has(.bars:hover) {
+  background: rgb(0, 0, 0);
+  background: -moz-linear-gradient(90deg, rgba(0, 0, 0, 1) 15%, rgba(255, 255, 255, 0) 100%);
+  background: -webkit-linear-gradient(90deg, rgba(0, 0, 0, 1) 15%, rgba(255, 255, 255, 0) 100%);
+  background: linear-gradient(90deg, rgba(0, 0, 0, 1) 15%, rgba(255, 255, 255, 0) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#000000", endColorstr="#ffffff", GradientType=1);
+}
+
+.bars:hover .bar span {
+  display: block;
+}
+
+.bar span {
+  display: none;
+}
+
+.vertical-bar {
+  clip-path: polygon(0 0,
+      100% 5%,
+      100% 100%,
+      0 95%);
+}
+
+.active-bar {
+  color: $accent;
+}
+
+.active-bar div {
+  background-color: $accent;
+}
+
+.bar:hover .vertical-bar {
+  background-color: $accent;
+  opacity: 1;
+}
+
+.bar:hover span {
+  color: $accent;
+  opacity: 1;
 }

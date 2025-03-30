@@ -8,24 +8,26 @@
             </div>
             <div :class="{ 'active-bar': 'experience-section' === activeId }" class="bar flex items-center gap-4 text-accent">
                 <div class="bg-white vertical-bar h-[100px] w-[4px]"></div>
-                <span class="text-white opacity-50">_experience</span>
+                <span>_experience</span>
             </div>
             <div :class="{ 'active-bar': 'portfolio-section' === activeId }" class="bar flex items-center gap-4 text-accent">
                 <div class="bg-white vertical-bar h-[100px] w-[4px]"></div>
-                <span class="text-white opacity-50">_projects</span>
+                <span>_projects</span>
             </div>
             <div :class="{ 'active-bar': 'contacts-section' === activeId }" class="bar flex items-center gap-4 text-accent">
                 <div class="bg-white vertical-bar h-[100px] w-[4px]"></div>
-                <span class="text-white opacity-50">_contacts</span>
+                <span>_contacts</span>
             </div>
             <span class="text-white ms-[-12px]">/04</span>
         </div>
-        <!-- <p>{{ position }}</p> -->
     </div>
 </template>
 
 <script setup>
     import { ref, onMounted, onUnmounted } from 'vue'
+    import { useMiscStore } from '~/store/misc';
+
+    const miscStore = useMiscStore();
 
     const activeId = ref('')
 
@@ -38,6 +40,7 @@
                 const id = entry.target.getAttribute('id')
                 if (entry.isIntersecting && id) {
                     activeId.value = id
+                    miscStore.currentSection = id.split('-')[0]
                 }
             })
             },

@@ -142,6 +142,10 @@ h6 {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#000000", endColorstr="#ffffff", GradientType=1);
 }
 
+.bar div {
+  background-color: $text-secondary;
+}
+
 .bars:hover .bar span {
   display: block;
 }

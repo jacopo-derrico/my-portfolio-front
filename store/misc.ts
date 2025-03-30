@@ -1,4 +1,3 @@
-import { Title } from '#build/components';
 import { defineStore } from 'pinia';
 
 export const useMiscStore = defineStore('miscStore', () => {

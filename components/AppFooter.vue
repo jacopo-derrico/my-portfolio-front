@@ -11,7 +11,7 @@
                 </div>
             </div>
             <p class="text-secondary">
-                Designed on Figma. Built with Nuxt.js and Node.js<br>
+                Designed on Figma. Built with Nuxt.js.<br>
                 <span v-if="currentYear > 2024">2024 - </span>{{ currentYear }}
             </p>
         </div>

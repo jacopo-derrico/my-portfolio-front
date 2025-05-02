@@ -146,12 +146,12 @@ h6 {
   background-color: $text-secondary;
 }
 
-.bars:hover .bar span {
+.bars:hover .bar a {
   display: block;
   color: $text-secondary;
 }
 
-.bar span {
+.bar a {
   display: none;
 }
 
@@ -170,7 +170,7 @@ h6 {
   background-color: $accent;
 }
 
-.active-bar span {
+.active-bar a {
   color: $accent !important;
 }
 
@@ -179,6 +179,6 @@ h6 {
   opacity: 1;
 }
 
-.bar:hover span {
+.bar:hover a {
   color: $accent !important;
 }

@@ -4,19 +4,19 @@
             <span class="text-accent ms-[-7px]">01</span>
             <div :class="{ 'active-bar': 'about-section' === activeId }" class="bar flex items-center gap-4">
                 <div class="bg-white vertical-bar h-[100px] w-[4px]"></div>
-                <span>_about</span>
+                <NuxtLink to="#about-section">_about</NuxtLink>
             </div>
             <div :class="{ 'active-bar': 'experience-section' === activeId }" class="bar flex items-center gap-4 text-accent">
                 <div class="bg-white vertical-bar h-[100px] w-[4px]"></div>
-                <span>_experience</span>
+                <NuxtLink to="#experience-section">_experience</NuxtLink>
             </div>
             <div :class="{ 'active-bar': 'portfolio-section' === activeId }" class="bar flex items-center gap-4 text-accent">
                 <div class="bg-white vertical-bar h-[100px] w-[4px]"></div>
-                <span>_projects</span>
+                <NuxtLink to="#portfolio-section">_portfolio</NuxtLink>
             </div>
             <div :class="{ 'active-bar': 'contacts-section' === activeId }" class="bar flex items-center gap-4 text-accent">
                 <div class="bg-white vertical-bar h-[100px] w-[4px]"></div>
-                <span>_contacts</span>
+                <NuxtLink to="#contacts-section">_contacts</NuxtLink>
             </div>
             <span class="text-white ms-[-12px]">/04</span>
         </div>
@@ -45,7 +45,7 @@
             })
             },
             {
-                threshold: 0.7,
+                threshold: 0.6,
                 rootMargin: '0px'
             }
         )

@@ -22,13 +22,13 @@
     </div>
     <div class="flex-initial ps-8 lg:w-1/2">
       <div class="flex justify-end mb-6">
-        <a v-if="project.githubUrl" :href="`${project.githubUrl}`" class="text-primary secondary-font me-6">GitHub <svg
+        <a v-if="project.githubUrl" :href="`${project.githubUrl}`" class="text-secondary secondary-font me-6">GitHub <svg
             class="inline" xmlns="http://www.w3.org/2000/svg" height="14px" viewBox="0 -960 960 960" width="14px"
             fill="#fff">
             <path
               d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h560v-280h80v280q0 33-23.5 56.5T760-120H200Zm188-212-56-56 372-372H560v-80h280v280h-80v-144L388-332Z" />
           </svg></a>
-        <a v-if="project.demoUrl" :href="`${project.demoUrl}`" class="text-primary secondary-font">visit <svg
+        <a v-if="project.demoUrl" :href="`${project.demoUrl}`" class="text-secondary secondary-font">visit <svg
             class="inline" xmlns="http://www.w3.org/2000/svg" height="14px" viewBox="0 -960 960 960" width="14px"
             fill="#fff">
             <path

@@ -1,5 +1,6 @@
 <template>
     <div>
+        <AppSidebar />
         <HomeHero />
         <HomeExperience />
         <HomePortfolio />

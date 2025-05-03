@@ -11,7 +11,17 @@
   src: url(/fonts/Roboto-Bold.ttf);
 }
 
-// general style
+// general style -------------------------------------------------------------------
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: $header-height;
+}
+
+section, [data-section] {
+  scroll-margin-top: $header-height;
+}
+
 body {
   background-color: $background-dark;
   font-family: 'Roboto-Regular';
@@ -38,7 +48,7 @@ h6 {
   font-size: 20px;
 }
 
-// functional classes
+// functional classes -------------------------------------------------------------------
 .text-primary {
   color: $text-primary;
 }
@@ -59,7 +69,7 @@ h6 {
   font-family: RobotoMono;
 }
 
-// buttons
+// buttons -------------------------------------------------------------------
 .btn-style {
   --b: 2px;
   /* thickness of the border */
@@ -79,7 +89,7 @@ h6 {
     conic-gradient(from -90deg at bottom var(--b) right var(--b), var(--_g)) 100% 100% / var(--_p);
 }
 
-// decoration
+// decoration -------------------------------------------------------------------
 .hr-custom {
   border-top: 2px solid $primary;
 }
@@ -97,7 +107,7 @@ h6 {
     );
 }
 
-// pills
+// pills -------------------------------------------------------------------
 .pill-type {
   border-radius: 25px;
   width: fit-content;
@@ -123,7 +133,7 @@ h6 {
   color: $secondary;
 }
 
-// portfolio card hover animation
+// portfolio card hover animation -------------------------------------------------------------------
 .hidden-info {
   opacity: 0;
 }
@@ -133,7 +143,12 @@ h6 {
   transition: opacity 0.4s ease;
 }
 
-// sidebar
+// header -------------------------------------------------------------------
+header {
+  background-color: $background-dark;
+}
+
+// sidebar -------------------------------------------------------------------
 #sidebar:has(.bars:hover) {
   background: rgb(0, 0, 0);
   background: -moz-linear-gradient(90deg, rgba(0, 0, 0, 1) 15%, rgba(255, 255, 255, 0) 100%);
@@ -142,11 +157,16 @@ h6 {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#000000", endColorstr="#ffffff", GradientType=1);
 }
 
-.bars:hover .bar span {
-  display: block;
+.bar div {
+  background-color: $text-secondary;
 }
 
-.bar span {
+.bars:hover .bar a {
+  display: block;
+  color: $text-secondary;
+}
+
+.bar a {
   display: none;
 }
 
@@ -165,12 +185,15 @@ h6 {
   background-color: $accent;
 }
 
+.active-bar a {
+  color: $accent !important;
+}
+
 .bar:hover .vertical-bar {
   background-color: $accent;
   opacity: 1;
 }
 
-.bar:hover span {
-  color: $accent;
-  opacity: 1;
+.bar:hover a {
+  color: $accent !important;
 }

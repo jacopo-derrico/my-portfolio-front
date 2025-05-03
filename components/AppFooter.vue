@@ -1,5 +1,5 @@
 <template>
-    <footer id="contacts-section" class="mx-auto py-10 mb-40 lg:py-0 lg:w-10/12">
+    <footer id="contacts-section" data-section-number="04" class="mx-auto py-10 my-20 lg:py-0 lg:w-10/12">
         <h3 class="text-button mb-10">// contacts</h3>
         <div class="flex">
             <div class="md:w-1/2">

@@ -1,7 +1,7 @@
 <template>
     <div id="sidebar" class="fixed secondary-font flex flex-col justify-center top-0 bottom-0 w-1/2 z-[100]">
         <div class="bars w-fit ps-6">
-            <span class="text-accent ms-[-7px]">{{ miscStore.currentSection.number }}</span>
+            <span class="text-accent ms-[-7px]">{{ miscStore.currentSection?.number ?? '01' }}</span>
             <div :class="{ 'active-bar': 'about-section' === activeId }" class="bar flex items-center gap-4">
                 <div class="bg-white vertical-bar h-[100px] w-[4px]"></div>
                 <NuxtLink to="#about-section">_about</NuxtLink>
@@ -45,7 +45,6 @@
                         sectionName: id.split('-')[0],
                         number: sectionNumber
                     };
-                    console.log(miscStore.currentSection);
                 }
             })
             },

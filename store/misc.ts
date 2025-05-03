@@ -6,7 +6,10 @@ export const useMiscStore = defineStore('miscStore', () => {
     let insta = 'https://www.instagram.com/deja_unleashed/profilecard/?igsh=YnB1ZWNrZGtsdWQ=';
     let linkedin = 'https://www.linkedin.com/in/jacopo-d-errico';
     
-    let currentSection = '';
+    let currentSection = {
+        sectionName: null,
+        number: null
+    };
 
     return {myEmail, gitHub, insta, linkedin}
 });

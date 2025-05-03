@@ -6,7 +6,7 @@
             </span>
             <AppLogo class="w-1/2"/>
             <span class="text-accent w-1/4 text-end">
-                _{{ miscStore.currentSection.sectionName }}
+                _{{ miscStore.currentSection?.sectionName ?? 'about' }}
             </span>
         </div>
     </header>

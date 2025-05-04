@@ -9,6 +9,7 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss',
     '@nuxt/fonts',
     '@pinia/nuxt',
+    "@nuxtjs/i18n",
   ],
   ssr: true,
   css: [

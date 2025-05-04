@@ -16,6 +16,13 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: $header-height;
+  cursor: url('/public/cursor.svg'), auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *{
+    cursor: auto; /* Reverts to the default cursor */
+  }
 }
 
 section, [data-section] {
@@ -50,6 +57,10 @@ h6 {
 
 a:hover {
   color: $text-primary;
+}
+
+a, button {
+  cursor: url('/public/cursor-pointer.svg'), auto;
 }
 
 // functional classes -------------------------------------------------------------------
@@ -163,6 +174,7 @@ header {
   background: -webkit-linear-gradient(90deg, rgba(0, 0, 0, 1) 15%, rgba(255, 255, 255, 0) 100%);
   background: linear-gradient(90deg, rgba(0, 0, 0, 1) 15%, rgba(255, 255, 255, 0) 100%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#000000", endColorstr="#ffffff", GradientType=1);
+  width: 50%;
 }
 
 .bar div {
@@ -204,4 +216,27 @@ header {
 
 .bar:hover a {
   color: $accent !important;
+}
+
+// footer -------------------------------------------------------------------
+.figma-link:hover {
+  background-image: 
+    linear-gradient(to right, #FF3837,#FF7238,#8750FF,#00B6FF,#27CB71); 
+  -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;  
+  animation: rainbow-animation 35s linear infinite;
+}
+
+.nuxt-link:hover {
+  background-image: 
+    linear-gradient(to right, #02DC82,#030617); 
+  -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;  
+  animation: rainbow-animation 35s linear infinite;
+}
+
+@keyframes rainbow-animation {
+    to {
+        background-position: 45vh;
+    }
 }

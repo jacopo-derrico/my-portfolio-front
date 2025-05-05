@@ -240,3 +240,37 @@ header {
         background-position: 45vh;
     }
 }
+
+
+.language-switcher {
+  position: relative;
+
+  .current-language {
+    color: $accent;
+    cursor: url('/public/cursor-pointer.svg'), auto;
+  }
+
+  .language-dropdown {
+    position: absolute;
+    display: none;
+    top: 100%;
+    left: 0;
+    border: 1px solid $primary;
+    background-color: $background-dark;
+    z-index: 100;
+    
+    a {
+      display: block;
+      padding: 8px 12px;
+      text-decoration: none;
+      color: $text-secondary;
+      
+      &:hover {
+        color: $accent;
+      }
+    }
+  }
+  .current-language:hover .language-dropdown {
+    display: block;
+  }
+}

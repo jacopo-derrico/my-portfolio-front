@@ -51,34 +51,8 @@
 
   const route = useRoute()
 
-  const portfolio = usePortfolioStore()
-  const projId = route.params.id
-  const project = portfolio.projects[projId - 1]
+  const portfolio = usePortfolioStore();
+  const slug = route.params.slug;
+  const project = portfolio.projects.find(proj => proj.slug === slug);
 
-  // const isLoading = ref(true)
-  // const error = ref(null)
-
-  // watch(() => portfolioStore.singleProjectData, (newData) => {
-  //   isLoading.value = false
-  // }, { immediate: true })
-
-  // // Fetch single project data when the component mounts
-  // async function fetchSingleProject() {
-  //   try {
-  //     const projectData = await portfolioStore.fetchSingleProject()
-  //   } catch (error) {
-  //     console.error('Error fetching project data:', error)
-  //     error.value = 'Failed to load project data'
-  //   }
-  // }
-
-  // fetchSingleProject()
-
-  // // Cancel the request if the component unmounts
-  // onMounted(() => {
-  //   return () => {
-  //     // Cancel the ongoing request
-  //     cancelRequest()
-  //   }
-  // })
 </script>

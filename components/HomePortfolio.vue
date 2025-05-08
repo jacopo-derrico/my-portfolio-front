@@ -23,7 +23,7 @@
                 </div>
             </NuxtLink> -->
 
-            <NuxtLink v-for="project in portfolio.projects" :to="`/projects/${project.id}`" :key="project.id" class="relative hover-info" :onclick="portfolio.singleProject = project.id">
+            <NuxtLink v-for="project in portfolio.projects" :to="localePath(`/projects/${project.id}`)" :key="project.id" class="relative hover-info" :onclick="portfolio.singleProject = project.id">
                 <img class="w-full h-full rounded-xl shadow"
                     :src="`${project.images[0]}`" alt="">
                 <div class="absolute bottom-0 left-0 top-0 right-0 bg-black bg-opacity-80 flex flex-col-reverse p-4 hidden-info">
@@ -47,6 +47,7 @@
 </template>
 
 <script setup>
+    const localePath = useLocalePath()
     import { usePortfolioStore } from '~/store/portfolio';
 
     const portfolio = usePortfolioStore();

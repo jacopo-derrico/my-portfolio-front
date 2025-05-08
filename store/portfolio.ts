@@ -3,7 +3,6 @@ import axios from 'axios';
 
 export const usePortfolioStore = defineStore('portfolioStore', () => {
     // state 
-    // let projects = ref([]) // stores all projects data from api
     let backUrl = '' // gets
     let singleProject = null
     let singleProjectData = null
@@ -13,6 +12,7 @@ export const usePortfolioStore = defineStore('portfolioStore', () => {
     let projects = [
         {
             id: 1,
+            slug: 'seo-preview',
             title: 'SEO preview',
             date: '2024',
             company: 'Personal project',
@@ -30,6 +30,7 @@ export const usePortfolioStore = defineStore('portfolioStore', () => {
         },
         {
             id: 2,
+            slug: 'startup-car-repair',
             title: 'Startup car repair website',
             date: '2024',
             company: 'Leox Solution',
@@ -47,6 +48,7 @@ export const usePortfolioStore = defineStore('portfolioStore', () => {
         },
         {
             id: 3,
+            slug: 'startup-rental',
             title: 'Startup rental website & logo',
             date: '2024',
             company: 'Omni Rent',
@@ -57,10 +59,11 @@ export const usePortfolioStore = defineStore('portfolioStore', () => {
             cover: '/proj/covers/',
             images: ['/proj/omni-1.webp'],
             githubUrl: 'https://github.com/jacopo-derrico/rent-website',
-            demoUrl: ''
+            demoUrl: 'https://omnirent.io/'
         },
         {
             id: 4,
+            slug: 'e-commerce-ssr',
             title: 'E-Commerce SSR',
             date: '2024',
             company: 'Personal project',
@@ -75,7 +78,8 @@ export const usePortfolioStore = defineStore('portfolioStore', () => {
         },
         {
             id: 5,
-            title: 'Consultancy website & logo',
+            slug: 'startup-consultancy-agency',
+            title: 'Startup consultancy website & logo',
             date: '2024',
             company: 'Quality Effective Solutions',
             collaborators: [{
@@ -92,6 +96,7 @@ export const usePortfolioStore = defineStore('portfolioStore', () => {
         },
         {
             id: 6,
+            slug: 'photographer-website',
             title: 'Photographer website',
             date: '2023',
             company: 'Andrea Lovera',
@@ -109,6 +114,7 @@ export const usePortfolioStore = defineStore('portfolioStore', () => {
         },
         {
             id: 7,
+            slug: 'nutritionist-website',
             title: 'Nutritionist website',
             date: '2023',
             company: 'Lara Di Gennaro',
@@ -119,47 +125,9 @@ export const usePortfolioStore = defineStore('portfolioStore', () => {
             cover: '/proj/covers/digennaro.webp',
             images: ['/proj/digennaro-1.webp', '/proj/digennaro-2.webp', '/proj/digennaro-3.webp', '/proj/digennaro-4.webp'],
             githubUrl: '',
-            demoUrl: 'https://www.digennaronutrizionista.it/'
+            demoUrl: ''
         },
     ]
-
-
-    // actions
-    // async fetchProjects() {
-    //     this.isLoading = true;
-    //     this.error = '';
-    //     try {
-    //         const response = await axios.get('http://127.0.0.1:8000/api/projects');
-    //         this.projects = response.data.projects;
-    //         this.backUrl = response.data.baseUrl;
-    //     } catch (error) {
-    //         this.error = 'Failed to fetch projects';
-    //         console.error('Error fetching projects:', error);
-    //     } finally {
-    //         this.isLoading = false;
-    //     }
-    // },
-    // async fetchSingleProject() {
-    //     this.isLoading = true;
-    //     this.error = '';
-    //     try {
-    //         const response = await axios.get(`http://127.0.0.1:8000/api/projects/${this.singleProject}`);
-    //         this.singleProjectData = response.data.project;
-    //     } catch (error) {
-    //         this.error = 'Failed to fetch project data'
-    //         console.error('Error fetching project data:', error);
-    //     } finally {
-    //         this.isLoading = false
-    //     }
-    // },
-    // initializeProjects() {
-    //     // Fetch projects on component mount
-    //     this.fetchProjects()
-    // },
-    // setSingleProject(id: null) {
-    //     this.singleProject = id
-    // }
-    // },
 
     return {
         projects,

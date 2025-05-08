@@ -29,7 +29,7 @@ export default defineNuxtConfig({
   },
   i18n: {
     lazy: true,
-    langDir: '/locales',
+    langDir: 'locales',
     strategy: 'prefix',
     locales: [
       { 
@@ -37,14 +37,14 @@ export default defineNuxtConfig({
         language: 'en-US',
         iso: "en-US", 
         name: '_english',
-        file: 'en-US.json'
+        file: 'en-US.js'
       },
       { 
         code: 'it', 
         language: 'it-IT',
         iso: "it-IT",
         name: '_italiano',
-        file: 'it-IT.json'
+        file: 'it-IT.js'
       }
     ],
     defaultLocale: 'en',

@@ -10,7 +10,7 @@
                         </div>
                         <div class="w-3/4">
                             <h6 class="text-primary">{{job.jobTitle}}</h6>
-                            <p class="text-primary  secondary-font text-[15px]">{{job.company}}</p>
+                            <p class="text-accent  secondary-font text-[15px]">{{job.company}}</p>
                             <p class="text-secondary">{{job.description}}</p>
                             <div class="mt-3">
                                 <hr class="hr-custom">
@@ -30,7 +30,7 @@
                     </div>
                     <div class="w-3/4">
                         <h6 class="text-primary">{{course.title}}</h6>
-                        <p class="text-primary  secondary-font text-[15px]">{{course.school}}</p>
+                        <p class="text-accent  secondary-font text-[15px]">{{course.school}}</p>
                         <p class="text-secondary">{{course.description}}</p>
                         <div class="mt-3">
                             <hr class="hr-custom">

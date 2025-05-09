@@ -1,6 +1,10 @@
 <template>
   <section class="flex mx-auto py-10 my-[100px] flex-wrap lg:py-0 lg:w-10/12 lg:justify-between">
     <div class="flex-initial pe-8 lg:w-1/2">
+      <div>
+        <a class="text-secondary secondary-font flex" @click="$router.back()">
+          <IconsBackArrow/> back</a>
+      </div>
       <h2 class="text-button lowercase mb-2">// {{ project.title }}</h2>
       <span v-if="project.date" class="text-primary secondary-font me-6">{{ project.date }}</span>
       <span v-if="project.company" class="text-primary secondary-font">{{ project.company }}</span>

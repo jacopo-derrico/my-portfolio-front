@@ -1,6 +1,6 @@
 <template>
     <header class="fixed top-0 w-full z-50">
-        <div class="flex justify-between items-center my-4 mx-auto py-10 lg:py-0 lg:w-10/12">
+        <div class="flex justify-between items-center my-4 mx-auto px-4 lg:px-0 lg:py-0 lg:w-10/12">
             <span class="text-primary w-1/4">
                 <!-- _lang -->
             </span>

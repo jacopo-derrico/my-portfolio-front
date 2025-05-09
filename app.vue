@@ -2,7 +2,7 @@
   <div>
     <NuxtRouteAnnouncer />
     <AppHeader />
-    <NuxtPage />
+    <NuxtPage class="mx-6 md:mx-0" />
     <AppFooter />
   </div>
 </template>

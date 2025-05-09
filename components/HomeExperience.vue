@@ -1,6 +1,6 @@
 <template>
-    <section id="experience-section" data-section-number="02" class="flex mx-auto py-10 my-[200px] flex-wrap lg:py-0 lg:w-10/12 lg:justify-between">
-        <div class="flex-initial pe-8 lg:w-1/2">
+    <section id="experience-section" data-section-number="02" class="flex mx-auto my-[200px] flex-wrap lg:py-0 lg:w-10/12 lg:justify-between">
+        <div class="flex-initial md:pe-8 lg:w-1/2">
             <h3 class="text-button mb-10">// experience</h3>
             <div>
                 <div v-for="job in experienceStore.experience" :key="job.year" class="mb-10">
@@ -21,7 +21,7 @@
                 </div>
             </div>
         </div>
-        <div class="flex-initial ps-8 lg:w-1/2">
+        <div class="flex-initial md:ps-8 lg:w-1/2">
             <h3 class="text-button mb-10">// education</h3>
             <div v-for="course in experienceStore.education" :key="course.year" class="mb-10">
                 <div class="flex justify-between">

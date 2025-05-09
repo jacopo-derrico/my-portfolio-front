@@ -63,6 +63,12 @@ a, button {
   cursor: url('/public/cursor-pointer.svg'), auto;
 }
 
+@media only screen and (max-width: 425px) {
+  h6 {
+    font-size: 18px;
+  }
+}
+
 // functional classes -------------------------------------------------------------------
 .text-primary {
   color: $text-primary;

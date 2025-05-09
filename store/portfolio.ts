@@ -127,6 +127,24 @@ export const usePortfolioStore = defineStore('portfolioStore', () => {
             githubUrl: '',
             demoUrl: ''
         },
+        {
+            id: 8,
+            slug: 'cromeyeui-bar',
+            title: 'Cromeyeui bar website',
+            date: '2025',
+            company: 'Bar delle guide - Courmayeur',
+            collaborators: [{
+                name: 'Valérie',
+                url: 'https://valeriejaccod.myportfolio.com/'
+            }],
+            description: "The website for a storic café in the beautiful city of Courmayeur, between Italy and France. The design has been made by a professional designer, that opened the way for a few challenges of customisation, especially for the elements composition that is out of the ordinary. The funniest parts where animations, especially the one in the hero of the home, fully customised and responsive.",
+            categories: ['Frontend', 'Backend'],
+            technologies: ['Wordpress'],
+            cover: '/proj/covers/cromeyeui.webp',
+            images: ['/proj/cromeyeui-1.webp', '/proj/cromeyeui-2.webp', '/proj/cromeyeui-3.webp', '/proj/cromeyeui-4.webp','/proj/cromeyeui-5.webp','/proj/cromeyeui-6.webp','/proj/cromeyeui-7.webp','/proj/cromeyeui-8.webp'],
+            githubUrl: '',
+            demoUrl: 'https://www.cromeyeuicafe.it/'
+        },
     ]
 
     return {

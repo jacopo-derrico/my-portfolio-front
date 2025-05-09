@@ -1,7 +1,8 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import { usePortfolioStore } from '~/store/portfolio';
 export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
-  devtools: { enabled: true },
+  devtools: { enabled: false },
   devServer: {
     port: 8000
   },
@@ -9,6 +10,7 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss',
     '@nuxt/fonts',
     '@pinia/nuxt',
+    "@nuxtjs/sitemap",
   ],
   ssr: true,
   css: [
@@ -26,21 +28,23 @@ export default defineNuxtConfig({
   fonts: {
     local: {},
   },
-  // vuefire: {
-  //   config: {
-  //     apiKey: "AIzaSyDq855EBxLYYtHwwDlsECP5QrJ6lu9o6OM",
-  //     authDomain: "my-portfolio-34fff.firebaseapp.com",
-  //     projectId: "my-portfolio-34fff",
-  //     storageBucket: "my-portfolio-34fff.appspot.com",
-  //     messagingSenderId: "861651541162",
-  //     appId: "1:861651541162:web:50e9d325bb8e6b262644d3",
-  //     measurementId: "G-QYQ31BDYQZ"
-  //   },
-  //   services: {
-  //     firestore: true,
-  //   },
-  //   auth: {
-  //     enabled: true
-  //   },
-  // },
+  app: {
+    head: {
+      title: 'DeJa - Designer & Web developer',
+      meta: [
+        { name: 'description', content: 'Designer & web developer based in Turin, Italy(for now). Take a look at my projects and contact me if you want to work with me.' }
+      ],
+      htmlAttrs: {
+        lang: 'en',
+      },
+      link: [
+        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      ]
+    }
+  },
+  sitemap: {
+    sources: [
+      '/api/sitemap-urls'
+    ]
+  }
 })

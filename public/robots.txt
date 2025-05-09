@@ -1,1 +1,10 @@
+User-agent: *
+Disallow: /login/
+Disallow: /admin/
 
+
+User-agent: *
+Allow: /
+
+Sitemap: https://deja-dev.com/sitemap.xml
+Sitemap: https://www.deja-dev.com/sitemap.xml

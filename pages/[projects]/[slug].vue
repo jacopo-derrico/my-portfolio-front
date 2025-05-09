@@ -62,4 +62,12 @@
   const slug = route.params.slug;
   const project = portfolio.projects.find(proj => proj.slug === slug);
 
+  useSeoMeta({
+    title: project.title,
+    ogTitle: project.title,
+    description: project.description,
+    ogDescription: project.description,
+    ogImage: project.images[1],
+    twitterCard: 'summary_large_image',
+  })
 </script>

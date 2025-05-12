@@ -59,7 +59,7 @@ a:hover {
   color: $text-primary;
 }
 
-a, button {
+a, button, .cursor-hover {
   cursor: url('/public/cursor-pointer.svg'), auto;
 }
 

@@ -48,7 +48,7 @@
       </div>
       <div class="columns-2 md:columns-2 gap-4 space-y-4">
         <div v-for="(image) in project.images" :key="image.indexOf">
-          <img class="w-full rounded-xl shadow" :src="`${image}`" alt="">
+          <img class="w-full rounded-xl shadow" :src="`${image}`" :alt="`${project.title} image`">
         </div>
       </div>
     </div>

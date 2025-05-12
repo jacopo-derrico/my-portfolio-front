@@ -6,7 +6,9 @@
             </span>
             <AppLogo class="h-[40px] md:h-[59px] w-1/2"/>
             <span class="text-accent w-1/4 text-end">
-                _{{ miscStore.currentSection?.sectionName ?? 'about' }}
+                <span v-if="isHomePage">
+                    _{{ miscStore.currentSection?.sectionName ?? 'about' }}
+                </span> 
             </span>
         </div>
     </header>
@@ -14,6 +16,10 @@
 
 <script setup>
     import { useMiscStore } from '~/store/misc';
+    const route = useRoute();
+
+    // Check if current route is homepage ("/")
+    const isHomePage = computed(() => route.path === '/');
 
     const miscStore = useMiscStore();
 </script>

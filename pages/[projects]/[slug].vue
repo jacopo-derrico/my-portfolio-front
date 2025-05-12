@@ -1,8 +1,8 @@
 <template>
-  <section class="flex mx-auto py-10 my-[100px] flex-wrap lg:py-0 lg:w-10/12 lg:justify-between">
-    <div class="flex-initial pe-8 lg:w-1/2">
+  <section class="flex mx-auto lg:py-10 my-[100px] flex-wrap px-4 lg:px-0 lg:py-0 lg:w-10/12 lg:justify-between">
+    <div class="flex-initial lg:pe-8 lg:w-1/2">
       <div>
-        <a class="text-secondary secondary-font flex" @click="$router.back()">
+        <a class="text-secondary secondary-font flex mb-3 lg:mb-0" @click="$router.back()">
           <IconsBackArrow/> back</a>
       </div>
       <h2 class="text-button lowercase mb-2">// {{ project.title }}</h2>
@@ -13,12 +13,12 @@
           <a :href="`${collab.url}`" rel="noreferrer noopener" target="_blank" class="text-secondary secondary-font">{{ collab.name }}</a>
         </span>
       </div>
-      <div class="flex gap-2 mt-6">
+      <div class="flex gap-2 mt-6 w-fit">
         <span v-for="(cat) in project.categories" :key="cat.indexOf" class="category pill-type">
           {{ cat }}
         </span>
       </div>
-      <div class="flex gap-2 flex-wrap mt-4">
+      <div class="flex gap-2 flex-wrap mt-4 w-fit">
         <span v-for="(tag) in project.technologies" :key="tag.indexOf" class="technology-singlePage pill-type">
           {{ tag }}
         </span>
@@ -29,7 +29,7 @@
         </p>
       </div>
     </div>
-    <div class="flex-initial ps-8 lg:w-1/2">
+    <div class="flex-initial mt-10 lg:mt-0 lg:ps-8 lg:w-1/2">
       <div class="flex justify-end mb-6">
         <a v-if="project.githubUrl" :href="`${project.githubUrl}`" rel="noreferrer noopener" target="_blank" class="text-secondary secondary-font me-6">GitHub <svg
             class="inline" xmlns="http://www.w3.org/2000/svg" height="14px" viewBox="0 -960 960 960" width="14px"

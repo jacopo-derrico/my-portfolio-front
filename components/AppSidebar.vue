@@ -1,5 +1,5 @@
 <template>
-    <div id="sidebar" class="fixed hidden secondary-font md:flex flex-col justify-center top-0 bottom-0 z-[100]">
+    <div id="sidebar" class="fixed hidden secondary-font lg:flex flex-col justify-center top-0 bottom-0 z-[100]">
         <div class="bars w-fit ps-6">
             <span class="text-accent ms-[-7px]">{{ miscStore.currentSection?.number ?? '01' }}</span>
             <div :class="{ 'active-bar': 'about-section' === activeId }" class="bar flex items-center gap-4">

@@ -1,8 +1,8 @@
 <template>
-  <section class="flex mx-auto py-10 my-[100px] flex-wrap lg:py-0 lg:w-10/12 lg:justify-between">
-    <div class="flex-initial pe-8 lg:w-1/2">
+  <section class="flex lg:py-10 my-[100px] flex-wrap px-4 mx-auto lg:px-0 lg:w-10/12 lg:justify-between">
+    <div class="flex-initial lg:pe-8 lg:w-1/2">
       <div>
-        <a class="text-secondary secondary-font flex" @click="$router.back()">
+        <a class="text-secondary secondary-font flex mb-3 lg:mb-0" @click="$router.back()">
           <IconsBackArrow/> back</a>
       </div>
       <h2 class="text-button lowercase mb-2">// {{ project.title }}</h2>
@@ -13,12 +13,12 @@
           <a :href="`${collab.url}`" rel="noreferrer noopener" target="_blank" class="text-secondary secondary-font">{{ collab.name }}</a>
         </span>
       </div>
-      <div class="flex gap-2 mt-6">
+      <div class="flex gap-2 mt-6 w-fit">
         <span v-for="(cat) in project.categories" :key="cat.indexOf" class="category pill-type">
           {{ cat }}
         </span>
       </div>
-      <div class="flex gap-2 flex-wrap mt-4">
+      <div class="flex gap-2 flex-wrap mt-4 w-fit">
         <span v-for="(tag) in project.technologies" :key="tag.indexOf" class="technology-singlePage pill-type">
           {{ tag }}
         </span>
@@ -29,7 +29,7 @@
         </p>
       </div>
     </div>
-    <div class="flex-initial ps-8 lg:w-1/2">
+    <div class="flex-initial mt-10 lg:mt-0 lg:ps-8 lg:w-1/2">
       <div class="flex justify-end mb-6">
         <a v-if="project.githubUrl" :href="`${project.githubUrl}`" rel="noreferrer noopener" target="_blank" class="text-secondary secondary-font me-6">GitHub <svg
             class="inline" xmlns="http://www.w3.org/2000/svg" height="14px" viewBox="0 -960 960 960" width="14px"
@@ -48,10 +48,14 @@
       </div>
       <div class="columns-2 md:columns-2 gap-4 space-y-4">
         <div v-for="(image) in project.images" :key="image.indexOf">
-          <img class="w-full rounded-xl shadow" :src="`${image}`" alt="">
+          <img class="w-full rounded-xl shadow cursor-hover" :src="`${image}`" :alt="`${project.title} image`" @click="openOverlay(image)">
         </div>
       </div>
     </div>
+  <div v-if="isOverlayOpen" class="absolute z-50 top-0 left-0 w-full h-full bg-black/80 flex items-center justify-center">
+    <svg @click="closeOverlay" class="absolute top-3 right-3 cursor-hover" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
+    <img :src="overImg" class="max-w-[90%] max-h-[90%]" @click.stop>
+  </div>
   </section>
 </template>
 
@@ -73,5 +77,20 @@
     ogDescription: project.description,
     ogImage: project.images[1],
     twitterCard: 'summary_large_image',
-  })
+  });
+
+  const isOverlayOpen = ref(false);
+  const overImg = ref('');
+
+  const openOverlay = (imgUrl) => {
+    isOverlayOpen.value = true;
+    overImg.value = imgUrl;
+    document.body.classList.add('overflow-hidden');
+  }
+
+  const closeOverlay = () => {
+    isOverlayOpen.value = false;
+    document.body.classList.remove('overflow-hidden');
+  };
+
 </script>

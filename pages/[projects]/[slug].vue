@@ -1,5 +1,5 @@
 <template>
-  <section class="flex mx-auto lg:py-10 my-[100px] flex-wrap px-4 lg:px-0 lg:py-0 lg:w-10/12 lg:justify-between">
+  <section class="flex lg:py-10 my-[100px] flex-wrap px-4 mx-auto lg:px-0 lg:w-10/12 lg:justify-between">
     <div class="flex-initial lg:pe-8 lg:w-1/2">
       <div>
         <a class="text-secondary secondary-font flex mb-3 lg:mb-0" @click="$router.back()">
@@ -48,10 +48,14 @@
       </div>
       <div class="columns-2 md:columns-2 gap-4 space-y-4">
         <div v-for="(image) in project.images" :key="image.indexOf">
-          <img class="w-full rounded-xl shadow" :src="`${image}`" :alt="`${project.title} image`">
+          <img class="w-full rounded-xl shadow cursor-hover" :src="`${image}`" :alt="`${project.title} image`" @click="openOverlay(image)">
         </div>
       </div>
     </div>
+  <div v-if="isOverlayOpen" class="absolute z-50 top-0 left-0 w-full h-full bg-black/80 flex items-center justify-center">
+    <svg @click="closeOverlay" class="absolute top-3 right-3 cursor-hover" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
+    <img :src="overImg" class="max-w-[90%] max-h-[90%]" @click.stop>
+  </div>
   </section>
 </template>
 
@@ -73,5 +77,20 @@
     ogDescription: project.description,
     ogImage: project.images[1],
     twitterCard: 'summary_large_image',
-  })
+  });
+
+  const isOverlayOpen = ref(false);
+  const overImg = ref('');
+
+  const openOverlay = (imgUrl) => {
+    isOverlayOpen.value = true;
+    overImg.value = imgUrl;
+    document.body.classList.add('overflow-hidden');
+  }
+
+  const closeOverlay = () => {
+    isOverlayOpen.value = false;
+    document.body.classList.remove('overflow-hidden');
+  };
+
 </script>

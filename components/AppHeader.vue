@@ -4,7 +4,7 @@
             <span class="text-primary w-1/4">
                 <!-- _lang -->
             </span>
-            <AppLogo class="w-1/2"/>
+            <AppLogo class="h-[40px] md:h-auto w-1/2"/>
             <span class="text-accent w-1/4 text-end">
                 _{{ miscStore.currentSection?.sectionName ?? 'about' }}
             </span>

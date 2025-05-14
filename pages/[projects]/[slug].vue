@@ -46,9 +46,9 @@
           </svg>
         </a>
       </div>
-      <div class="columns-2 md:columns-2 gap-4 space-y-4">
+      <div class="columns-2 gap-4 space-y-4">
         <div v-for="(image) in project.images" :key="image.indexOf">
-          <img class="w-full rounded-xl shadow cursor-hover" :src="`${image}`" :alt="`${project.title} image`" @click="openOverlay(image)">
+          <NuxtImg class="w-full rounded-xl shadow cursor-hover" :src="`${image}`" :alt="`${project.title} image`" @click="openOverlay(image)" sizes="sm:180px md:350px lg:190px xl:276" format="webp"/>
         </div>
       </div>
     </div>

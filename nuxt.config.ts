@@ -6,12 +6,7 @@ export default defineNuxtConfig({
   devServer: {
     port: 8000
   },
-  modules: [
-    '@nuxtjs/tailwindcss',
-    '@nuxt/fonts',
-    '@pinia/nuxt',
-    "@nuxtjs/sitemap",
-  ],
+  modules: ['@nuxtjs/tailwindcss', '@nuxt/fonts', '@pinia/nuxt', "@nuxtjs/sitemap", '@nuxt/image'],
   ssr: true,
   css: [
     '@/assets/main.scss'

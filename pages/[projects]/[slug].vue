@@ -47,15 +47,20 @@
         </a>
       </div>
       <div class="columns-2 gap-4 space-y-4">
-        <div v-for="(image) in project.images" :key="image.indexOf">
-          <NuxtImg class="w-full rounded-xl shadow cursor-hover" :src="`${image}`" :alt="`${project.title} image`" @click="openOverlay(image)" sizes="sm:180px md:350px lg:190px xl:276" format="webp"/>
+        <div v-for="(image, index) in project.images" :key="image.indexOf">
+          <NuxtImg class="w-full rounded-xl shadow cursor-hover" :src="`${image}`" :alt="`${project.title} image`" @click="() => showImg(index)" sizes="sm:180px md:350px lg:190px xl:276" format="webp"/>
         </div>
+        <VueEasyLightbox
+          :visible="visibleRef"
+          :imgs="project.images"
+          :index="indexRef"
+          :rotateDisabled="true"
+          :moveDisabled="true"
+          @hide="onHide"
+        >
+        </VueEasyLightbox>
       </div>
     </div>
-  <div v-if="isOverlayOpen" class="absolute z-50 top-0 left-0 w-full h-full bg-black/80 flex items-center justify-center">
-    <svg @click="closeOverlay" class="absolute top-3 right-3 cursor-hover" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
-    <img :src="overImg" class="max-w-[90%] max-h-[90%]" @click.stop>
-  </div>
   </section>
 </template>
 
@@ -70,6 +75,15 @@
   const slug = route.params.slug;
   const project = portfolio.projects.find(proj => proj.slug === slug);
 
+  const visibleRef = ref(false);
+  const indexRef = ref(0);
+
+  const showImg = (index) => {
+    indexRef.value = index;
+    visibleRef.value = true;
+  };
+  const onHide = () => (visibleRef.value = false);
+
   useSeoMeta({
     title: project.title,
     ogTitle: project.title,
@@ -78,19 +92,5 @@
     ogImage: project.images[1],
     twitterCard: 'summary_large_image',
   });
-
-  const isOverlayOpen = ref(false);
-  const overImg = ref('');
-
-  const openOverlay = (imgUrl) => {
-    isOverlayOpen.value = true;
-    overImg.value = imgUrl;
-    document.body.classList.add('overflow-hidden');
-  }
-
-  const closeOverlay = () => {
-    isOverlayOpen.value = false;
-    document.body.classList.remove('overflow-hidden');
-  };
 
 </script>

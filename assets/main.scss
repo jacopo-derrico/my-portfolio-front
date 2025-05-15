@@ -69,6 +69,15 @@ a, button, .cursor-hover {
   }
 }
 
+// lightbox images
+.vel-toolbar {
+  display: none !important;
+}
+
+.vel-icon:hover {
+  cursor: url('/public/cursor-pointer.svg'), auto;
+}
+
 // functional classes -------------------------------------------------------------------
 .text-primary {
   color: $text-primary;

@@ -10,6 +10,7 @@
                 </a>
             </div>
         </div>
+        
         <div class="sm:w-1/2 flex justify-end">
             <NuxtImg class="sm:w-380px md:w-400px" src="../public/hero.webp" alt="DeJa - Designer and Web developer" sizes="sm:380px md:400px lg:400px" format="webp"/>
         </div>

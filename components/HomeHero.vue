@@ -5,7 +5,7 @@
             <h1 class="text-primary">Designer & Web Developer</h1>
             <p class="text-secondary">I have always had a passion for technology and design. During my undergraduate studies, I learned a design method and how to work in a team. I continued to explore the world of the web, starting with graphic design and then completing my journey with development.</p>
             <div class="flex justify-end mt-10">
-                <a href="">
+                <a href="#portfolio-section">
                     <button class="text-button uppercase btn-style py-3 px-5">_see projects</button>
                 </a>
             </div>

@@ -1,5 +1,5 @@
 <template>
-    <section id="experience-section" data-section-number="02" class="flex mx-auto my-[200px] flex-wrap lg:py-0 lg:w-10/12 lg:justify-between">
+    <section id="experience-section" data-section-number="02" class="flex mx-auto my-[200px] flex-wrap lg:py-0 lg:justify-between">
         <div class="flex-initial md:pe-8 lg:w-1/2">
             <h3 class="text-button mb-10">// experience</h3>
             <div>

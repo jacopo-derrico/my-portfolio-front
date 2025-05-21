@@ -1,5 +1,5 @@
 <template>
-    <section id="portfolio-section" data-section-number="03" class="mx-auto py-10 my-[200px] lg:py-0 lg:w-10/12">
+    <section id="portfolio-section" data-section-number="03" class="mx-auto py-10 my-[200px] lg:py-0">
         <h3 class="text-button mb-10">// portfolio</h3>
         <div class="columns-2 lg:columns-3 gap-4 space-y-4">
             <div v-for="project in portfolio.projects" :key="project.id">

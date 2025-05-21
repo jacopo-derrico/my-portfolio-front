@@ -239,6 +239,12 @@ header {
   color: $accent !important;
 }
 
+@media only screen and (max-width: 1079px) {
+  #sidebar {
+    display: none;
+  }
+}
+
 // footer -------------------------------------------------------------------
 .figma-link:hover {
   background-image: 
@@ -260,4 +266,9 @@ header {
     to {
         background-position: 45vh;
     }
+}
+
+// error page -------------------------------------------------------------------
+#error-page {
+  color: $primary;
 }

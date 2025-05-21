@@ -25,7 +25,7 @@ export default defineNuxtConfig({
   },
   app: {
     head: {
-      title: 'DeJa - Designer & Web developer',
+      title: 'Designer & Web developer',
       meta: [
         { name: 'description', content: 'Designer & web developer based in Turin, Italy(for now). Take a look at my projects and contact me if you want to work with me.' }
       ],

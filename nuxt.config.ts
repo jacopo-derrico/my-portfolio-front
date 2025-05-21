@@ -37,6 +37,10 @@ export default defineNuxtConfig({
       ]
     }
   },
+  site: { 
+    url: 'https://deja-dev.com', 
+    name: 'Deja - Designer & Web developer' 
+    },
   sitemap: {
     sources: [
       '/api/sitemap-urls'

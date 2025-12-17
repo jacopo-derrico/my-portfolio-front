@@ -1,7 +1,7 @@
 <template>
     <section id="portfolio-section" data-section-number="03" class="mx-auto py-10 my-[200px] lg:py-0 lg:w-10/12">
         <h3 class="text-button mb-10">// portfolio</h3>
-        <div class="columns-2 lg:columns-3 gap-4 space-y-4">
+        <div class="columns-2 lg:columns-3 2xl:columns-4 gap-4 space-y-4">
             <div v-for="project in portfolio.projects" :key="project.id">
                 <NuxtLink class="relative hover-info block mb-4 overflow-hidden rounded-xl" :to="`/projects/${project.slug}`" :onclick="portfolio.singleProject = project.id">
                     <NuxtImg :src="project.images[0]" :alt="`${project.title} - cover image`" class="w-full h-full rounded-xl shadow" sizes="sm:180px md:350px lg:240px" loading="lazy" format="webp" />

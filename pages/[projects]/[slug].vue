@@ -46,9 +46,9 @@
           </svg>
         </a>
       </div>
-      <div class="columns-2 gap-4 space-y-4">
-        <div v-for="(image, index) in project.images" :key="image.indexOf">
-          <NuxtImg class="w-full rounded-xl shadow cursor-hover" :src="`${image}`" :alt="`${project.title} image`" @click="() => showImg(index)" sizes="sm:180px md:350px lg:190px xl:276" format="webp"/>
+      <div class="grid grid-cols-2 2xl:grid-cols-4 gap-4 auto-rows-auto">
+        <div v-for="(image, index) in project.images" :key="image.indexOf" :class="wideImages.includes(image) ? 'col-span-2' : ''">
+          <NuxtImg class="w-full h-full object-cover rounded-xl shadow cursor-hover" :src="`${image}`" :alt="`${project.title} image`" @click="() => showImg(index)" @load="(e) => handleImageLoad(e, image)" sizes="sm:180px md:350px lg:190px xl:276" format="webp"/>
         </div>
         <VueEasyLightbox
           :visible="visibleRef"
@@ -74,6 +74,25 @@
   const portfolio = usePortfolioStore();
   const slug = route.params.slug;
   const project = portfolio.projects.find(proj => proj.slug === slug);
+  const wideImages = ref([]);
+
+  // handle wider images based on aspect ratio
+  const handleImageLoad = (event, imageSrc) => {
+    if (!event?.target) return;
+    
+    const imgElement = event.target;
+    
+    // Ensure naturalWidth and naturalHeight are available
+    if (!imgElement.naturalWidth || !imgElement.naturalHeight) return;
+    
+    const aspectRatio = imgElement.naturalWidth / imgElement.naturalHeight;
+    // If width is greater than height (landscape/horizontal), span 2 columns
+    if (aspectRatio > 1) {
+      if (!wideImages.value.includes(imageSrc)) {
+        wideImages.value = [...wideImages.value, imageSrc];
+      }
+    }
+  };
 
   const visibleRef = ref(false);
   const indexRef = ref(0);
@@ -94,3 +113,4 @@
   });
 
 </script>
+

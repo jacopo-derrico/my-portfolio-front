@@ -41,5 +41,10 @@ export default defineNuxtConfig({
     sources: [
       '/api/sitemap-urls'
     ]
+  },
+  runtimeConfig: {
+    public: {
+      wordpressUrl: 'http://deja-backend.local/graphql'
+    }
   }
 })

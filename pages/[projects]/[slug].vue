@@ -24,7 +24,8 @@
         </span>
       </div>
       <div>
-        <p class="text-secondary mt-12">
+        <div v-if="project.isWordPressPost" class="text-secondary mt-12 prose prose-invert max-w-none" v-html="project.description"></div>
+        <p v-else class="text-secondary mt-12">
           {{ project.description }}
         </p>
       </div>
@@ -70,10 +71,81 @@
   import { useRoute } from 'vue-router'
 
   const route = useRoute()
+  const config = useRuntimeConfig();
 
   const portfolio = usePortfolioStore();
   const slug = route.params.slug;
-  const project = portfolio.projects.find(proj => proj.slug === slug);
+  
+  // Try to find project in portfolio store first
+  let project = portfolio.projects.find(proj => proj.slug === slug);
+  
+  // If not found in portfolio, fetch from WordPress
+  if (!project) {
+    const { data } = await useFetch(config.public.wordpressUrl, {
+      method: 'post',
+      body: {
+        query: `
+          query PostBySlug($slug: ID!) {
+            post(id: $slug, idType: SLUG) {
+              id
+              title
+              slug
+              date
+              content
+              featuredImage {
+                node {
+                  sourceUrl
+                }
+              }
+              tags {
+                nodes {
+                  name
+                }
+              }
+              categories {
+                nodes {
+                  name
+                }
+              }
+              author {
+                node {
+                  nickname
+                }
+              }
+            }
+          }
+        `,
+        variables: {
+          slug: slug
+        }
+      },
+      transform(data) {
+        const post = data.data.post;
+        if (!post) return null;
+        
+        // Transform WordPress post to match portfolio project structure
+        return {
+          title: post.title,
+          slug: post.slug,
+          date: new Date(post.date).toLocaleDateString(),
+          description: post.content, // WordPress content as description
+          images: post.featuredImage?.node?.sourceUrl ? [post.featuredImage.node.sourceUrl] : [],
+          technologies: post.tags?.nodes?.map(tag => tag.name) || [],
+          categories: post.categories?.nodes
+                ?.filter(cat => {
+                    const lowerName = cat.name.toLowerCase().trim();
+                    return lowerName !== 'portfolio';
+                })
+                .map(cat => cat.name) || [],
+          company: post.author?.node?.nickname,
+          isWordPressPost: true // Flag to identify WP posts
+        };
+      }
+    });
+    
+    project = data.value;
+  }
+  
   const wideImages = ref([]);
 
   // handle wider images based on aspect ratio

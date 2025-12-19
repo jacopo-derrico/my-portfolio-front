@@ -81,7 +81,7 @@
   
   // If not found in portfolio, fetch from WordPress
   if (!project) {
-    const { data } = await useFetch(config.public.wordpressUrl, {
+    const { data: postData } = await useFetch(config.public.wordpressUrl, {
       method: 'post',
       body: {
         query: `
@@ -92,6 +92,7 @@
               slug
               date
               content
+              databaseId
               featuredImage {
                 node {
                   sourceUrl
@@ -112,6 +113,11 @@
                   nickname
                 }
               }
+              portfolioProjects {
+                githubLink
+                imageUrls
+                websiteLink
+              }
             }
           }
         `,
@@ -120,30 +126,42 @@
         }
       },
       transform(data) {
-        const post = data.data.post;
-        if (!post) return null;
-        
-        // Transform WordPress post to match portfolio project structure
-        return {
-          title: post.title,
-          slug: post.slug,
-          date: new Date(post.date).toLocaleDateString(),
-          description: post.content, // WordPress content as description
-          images: post.featuredImage?.node?.sourceUrl ? [post.featuredImage.node.sourceUrl] : [],
-          technologies: post.tags?.nodes?.map(tag => tag.name) || [],
-          categories: post.categories?.nodes
-                ?.filter(cat => {
-                    const lowerName = cat.name.toLowerCase().trim();
-                    return lowerName !== 'portfolio';
-                })
-                .map(cat => cat.name) || [],
-          company: post.author?.node?.nickname,
-          isWordPressPost: true // Flag to identify WP posts
-        };
+        return data.data.post;
       }
     });
     
-    project = data.value;
+    if (postData.value) {
+      // Transform WordPress post to match portfolio project structure
+      project = {
+        title: postData.value.title,
+        slug: postData.value.slug,
+        date: new Date(postData.value.date).toLocaleDateString(),
+        description: postData.value.content,
+        images: postData.value.portfolioProjects?.imageUrls
+                  .split(', ')
+                  .filter(e => e !== '')
+                  .map(e => `http://deja-backend.local${e}`) || [],
+        githubUrl: postData.value.portfolioProjects?.githubLink,
+        demoUrl: postData.value.portfolioProjects?.websiteLink,
+        technologies: postData.value.tags?.nodes?.map(tag => tag.name) || [],
+        categories: postData.value.categories?.nodes
+              ?.filter(cat => {
+                  const lowerName = cat.name.toLowerCase().trim();
+                  return lowerName !== 'portfolio';
+              })
+              .map(cat => cat.name) || [],
+        company: postData.value.author?.node?.nickname,
+        isWordPressPost: true
+      };
+    }
+  }
+  
+  // If project not found in portfolio store or WordPress, show 404
+  if (!project) {
+    throw createError({
+      statusCode: 404,
+      statusMessage: 'Project not found'
+    });
   }
   
   const wideImages = ref([]);

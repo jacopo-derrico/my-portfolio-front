@@ -57,35 +57,47 @@
     method: 'post',
     body: {
         query: `
-            query Posts {
-                posts(first:10, where: {categoryName: "portfolio"}){
-                    nodes {
-                        slug
-                        content
-                        author {
-                            node {
-                                nickname
-                            }
-                        }
-                        date
-                        featuredImage {
-                            node {
-                                sourceUrl
-                            }
-                        }
-                        title
-                        tags {
-                            nodes {
-                                name
-                            }
-                        }
-                        categories {
-                            nodes {
-                                name
-                            }
-                        }
+            query portfolioPosts {
+            posts(where: {categoryName: "portfolio"}) {
+                nodes {
+                content
+                author {
+                    node {
+                    nickname
                     }
                 }
+                portfolioProjects {
+                    githubLink
+                    imageUrls
+                    websiteLink
+                }
+                date
+                featuredImage {
+                    node {
+                    sourceUrl
+                    }
+                }
+                title
+                slug
+                tags {
+                    nodes {
+                    name
+                    }
+                }
+                categories {
+                    nodes {
+                    name
+                    }
+                }
+                databaseId
+                }
+                pageInfo {
+                    endCursor
+                    startCursor
+                    hasNextPage
+                    hasPreviousPage
+                }
+            }
             }`
     },
     transform(data){

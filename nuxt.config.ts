@@ -1,5 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-import { usePortfolioStore } from '~/store/portfolio';
+
 export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
   devtools: { enabled: false },
@@ -44,7 +44,8 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      wordpressUrl: 'http://deja-backend.local/graphql'
+      wordpressUrl: process.env.DB_LINK,
+      wordpressBaseUrl: process.env.DB_BASE_LINK
     }
   }
 })

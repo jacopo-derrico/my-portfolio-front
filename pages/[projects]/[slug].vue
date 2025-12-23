@@ -118,6 +118,10 @@
                 imageUrls
                 websiteLink
               }
+              postSeo {
+                seoTitle
+                seoDescription
+              }
             }
           }
         `,
@@ -140,7 +144,7 @@
         images: postData.value.portfolioProjects?.imageUrls
                   .split(', ')
                   .filter(e => e !== '')
-                  .map(e => `http://deja-backend.local${e}`) || [],
+                  .map(e => config.public.wordpressBaseUrl + e) || [],
         githubUrl: postData.value.portfolioProjects?.githubLink,
         demoUrl: postData.value.portfolioProjects?.websiteLink,
         technologies: postData.value.tags?.nodes?.map(tag => tag.name) || [],
@@ -152,6 +156,7 @@
               .map(cat => cat.name) || [],
         company: postData.value.author?.node?.nickname,
         isWordPressPost: true
+        // TODO add SEO fields
       };
     }
   }

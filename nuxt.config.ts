@@ -27,7 +27,7 @@ export default defineNuxtConfig({
     head: {
       title: 'DeJa - Designer & Web developer',
       meta: [
-        { name: 'description', content: 'Designer & web developer based in Turin, Italy(for now). Take a look at my projects and contact me if you want to work with me.' }
+        { name: 'description', content: 'Designer & web developer based in Italy (for now). Take a look at my projects and contact me if you want to work with me.' }
       ],
       htmlAttrs: {
         lang: 'en',
@@ -45,7 +45,9 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       wordpressUrl: process.env.DB_LINK,
-      wordpressBaseUrl: process.env.DB_BASE_LINK
+      wordpressBaseUrl: process.env.DB_BASE_LINK,
+      siteName: process.env.SITE_NAME || 'DeJa - Designer & Web developer',
+      siteLocale: process.env.SITE_LOCALE || 'en_US',
     }
   }
 })

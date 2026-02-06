@@ -78,6 +78,8 @@
   
   // Try to find project in portfolio store first
   let project = portfolio.projects.find(proj => proj.slug === slug);
+
+  let postData;
   
   // If not found in portfolio, fetch from WordPress
   if (!project) {
@@ -141,6 +143,7 @@
         slug: postData.value.slug,
         date: new Date(postData.value.date).toLocaleDateString(),
         description: postData.value.content,
+        cover: postData.value.featuredImage?.node?.sourceUrl || null,
         images: postData.value.portfolioProjects?.imageUrls
                   .split(', ')
                   .filter(e => e !== '')
@@ -155,7 +158,9 @@
               })
               .map(cat => cat.name) || [],
         company: postData.value.author?.node?.nickname,
-        isWordPressPost: true
+        isWordPressPost: true,
+        seoTitle: postData.value.seoTitle || '',
+        seoDescription: postData.value.seoDescription || ''
         // TODO add SEO fields
       };
     }
@@ -198,14 +203,103 @@
   };
   const onHide = () => (visibleRef.value = false);
 
-  useSeoMeta({
-    title: project.title,
-    ogTitle: project.title,
-    description: project.description,
-    ogDescription: project.description,
-    ogImage: project.images[1],
-    twitterCard: 'summary_large_image',
+  // useSeoMeta({
+  //   title: project.seoTitle || project.title,
+  //   ogTitle: project.seoTitle || project.title,
+  //   description: project.seoDescription || project.description,
+  //   ogDescription: project.seoDescription || project.description,
+  //   ogImage: project.images[1],
+  //   twitterCard: 'summary_large_image',
+  // });
+
+  const siteBase = config.public.siteUrl || config.public.wordpressBaseUrl || '';
+  const pageUrl = siteBase ? new URL(route.fullPath || '/', siteBase).toString() : route.fullPath || '';
+
+  const ogImage = project.cover || (project.images && project.images.length ? project.images[0] : null);
+  const imageAlt = `${project.seoTitle || project.title} cover image`;
+
+  // plain description for meta and JSON-LD (strip HTML)
+  const stripHtml = (html = '') => {
+    return html.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim().slice(0, 320);
+  };
+  const plainDescription = stripHtml(project.seoDescription || '') || stripHtml(project.description || '');
+
+  // base meta (title/desc/og/twitter)
+  useHead({
+    title: project.seoTitle || project.title,
+    meta: [
+      { name: 'description', content: project.seoDescription || plainDescription },
+
+      // Open Graph basics
+      { property: 'og:locale', content: config.public.siteLocale || 'en_US' },
+      { property: 'og:site_name', content: config.public.siteName || '' },
+      { property: 'og:type', content: project.isWordPressPost ? 'article' : 'website' },
+      { property: 'og:title', content: project.seoTitle || project.title },
+      { property: 'og:description', content: project.seoDescription || plainDescription },
+      ...(ogImage ? [{ property: 'og:image', content: ogImage }] : []),
+      ...(ogImage ? [{ property: 'og:image:alt', content: imageAlt }] : []),
+      { property: 'og:url', content: pageUrl },
+
+      // Twitter
+      { name: 'twitter:card', content: 'summary_large_image' },
+      { name: 'twitter:title', content: project.seoTitle || project.title },
+      { name: 'twitter:description', content: project.seoDescription || plainDescription },
+      ...(ogImage ? [{ name: 'twitter:image', content: ogImage }] : []),
+      ...(ogImage ? [{ name: 'twitter:image:alt', content: imageAlt }] : []),
+
+      // Article-specific metadata (if WP post)
+      ...(project.isWordPressPost && postData?.value?.date ? [
+        { property: 'article:published_time', content: new Date(postData.value.date).toISOString() }
+      ] : []),
+      ...(project.isWordPressPost && postData?.value?.modified ? [
+        { property: 'article:modified_time', content: new Date(postData.value.modified).toISOString() }
+      ] : []),
+      ...(project.technologies?.length ? [{ property: 'article:tag', content: project.technologies.join(', ') }] : []),
+      ...(project.company ? [{ property: 'article:author', content: project.company }] : []),
+    ],
+    // Add JSON-LD
+    script: [
+      {
+        type: 'application/ld+json',
+        children: JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': project.isWordPressPost ? 'Article' : 'WebPage',
+          headline: project.seoTitle || project.title,
+          description: project.seoDescription || plainDescription,
+          image: ogImage ? [ogImage] : undefined,
+          author: project.company ? { '@type': 'Person', name: project.company } : undefined,
+          datePublished: project.isWordPressPost && postData?.value?.date ? new Date(postData.value.date).toISOString() : undefined,
+          dateModified: project.isWordPressPost && postData?.value?.modified ? new Date(postData.value.modified).toISOString() : undefined,
+          mainEntityOfPage: { '@type': 'WebPage', '@id': pageUrl },
+          publisher: config.public.siteName ? {
+            '@type': 'Organization',
+            name: config.public.siteName
+          } : undefined
+        })
+      }
+    ]
   });
+
+  // attempt to fetch image dimensions and update meta with og:image:width/height (improves some social previews)
+  if (ogImage && process.client) {
+    const loadImageDims = (src) => new Promise((res) => {
+      const img = new Image();
+      img.onload = () => res({ width: img.naturalWidth, height: img.naturalHeight });
+      img.onerror = () => res(null);
+      img.src = src;
+    });
+
+    loadImageDims(ogImage).then(dim => {
+      if (dim) {
+        useHead({
+          meta: [
+            { property: 'og:image:width', content: String(dim.width) },
+            { property: 'og:image:height', content: String(dim.height) }
+          ]
+        });
+      }
+    });
+  }
 
 </script>
 

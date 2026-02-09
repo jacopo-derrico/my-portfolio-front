@@ -6,10 +6,10 @@
           <IconsBackArrow/> back</a>
       </div>
       <h2 class="text-button lowercase mb-2">// {{ project.title }}</h2>
-      <span v-if="project.date" class="text-primary secondary-font me-6">{{ project.date }}</span>
+      <span v-if="project.year" class="text-primary secondary-font me-6">{{ project.year }}</span>
       <span v-if="project.company" class="text-primary secondary-font">{{ project.company }}</span>
       <div v-if="project.collaborators" class="mt-3">
-        <span v-for="(collab) in project.collaborators"  :key="collab.indexOf">
+        <span v-for="(collab, i) in project.collaborators" :key="i">
           <a :href="`${collab.url}`" rel="noreferrer noopener" target="_blank" class="text-secondary secondary-font">{{ collab.name }}</a>
         </span>
       </div>
@@ -83,58 +83,63 @@
   
   // If not found in portfolio, fetch from WordPress
   if (!project) {
-    const { data: postData } = await useFetch(config.public.wordpressUrl, {
-      method: 'post',
-      body: {
-        query: `
-          query PostBySlug($slug: ID!) {
-            post(id: $slug, idType: SLUG) {
-              id
-              title
-              slug
-              date
-              content
-              databaseId
-              featuredImage {
-                node {
-                  sourceUrl
+      const { data: postData } = await useFetch(config.public.wordpressUrl, {
+          method: 'post',
+          body: {
+            query: `
+              query ProjectBySlug($slug: ID!) {
+                project(id: $slug, idType: SLUG) {
+                  id
+                  title
+                  slug
+                  date
+                  content
+                  databaseId
+                  featuredImage {
+                    node {
+                      sourceUrl
+                    }
+                  }
+                  tags {
+                    nodes {
+                      name
+                    }
+                  }
+                  categories {
+                    nodes {
+                      name
+                    }
+                  }
+                  portfolioProjects {
+                    githubLink
+                    imageUrls
+                    websiteLink
+                    collaborator1 {
+                      name
+                      link
+                    }
+                    collaborator2 {
+                      name
+                      link
+                    }
+                    client
+                    year
+                  }
+                  postSeo {
+                    seoTitle
+                    seoDescription
+                  }
                 }
               }
-              tags {
-                nodes {
-                  name
-                }
-              }
-              categories {
-                nodes {
-                  name
-                }
-              }
-              author {
-                node {
-                  nickname
-                }
-              }
-              portfolioProjects {
-                githubLink
-                imageUrls
-                websiteLink
-              }
-              postSeo {
-                seoTitle
-                seoDescription
-              }
+            `,
+            variables: {
+              slug: slug
             }
+          },
+          transform(data) {
+            return data.data.project;
           }
-        `,
-        variables: {
-          slug: slug
-        }
-      },
-      transform(data) {
-        return data.data.post;
-      }
-    });
+        });
     
     if (postData.value) {
       // Transform WordPress post to match portfolio project structure
@@ -144,10 +149,10 @@
         date: new Date(postData.value.date).toLocaleDateString(),
         description: postData.value.content,
         cover: postData.value.featuredImage?.node?.sourceUrl || null,
-        images: postData.value.portfolioProjects?.imageUrls
+        images: (postData.value.portfolioProjects?.imageUrls || '')
                   .split(', ')
                   .filter(e => e !== '')
-                  .map(e => config.public.wordpressBaseUrl + e) || [],
+                  .map(e => config.public.wordpressBaseUrl + e),
         githubUrl: postData.value.portfolioProjects?.githubLink,
         demoUrl: postData.value.portfolioProjects?.websiteLink,
         technologies: postData.value.tags?.nodes?.map(tag => tag.name) || [],
@@ -157,11 +162,21 @@
                   return lowerName !== 'portfolio';
               })
               .map(cat => cat.name) || [],
-        company: postData.value.author?.node?.nickname,
+        company: postData.value.portfolioProjects?.client || '',
+        collaborators: [
+          postData.value.portfolioProjects?.collaborator1?.name ? {
+            name: postData.value.portfolioProjects.collaborator1.name,
+            url: postData.value.portfolioProjects.collaborator1.link
+          } : null,
+          postData.value.portfolioProjects?.collaborator2?.name ? {
+            name: postData.value.portfolioProjects.collaborator2.name,
+            url: postData.value.portfolioProjects.collaborator2.link
+          } : null,
+        ].filter(Boolean),
+        year: postData.value.portfolioProjects?.year || '',
         isWordPressPost: true,
         seoTitle: postData.value.seoTitle || '',
         seoDescription: postData.value.seoDescription || ''
-        // TODO add SEO fields
       };
     }
   }
@@ -203,15 +218,6 @@
   };
   const onHide = () => (visibleRef.value = false);
 
-  // useSeoMeta({
-  //   title: project.seoTitle || project.title,
-  //   ogTitle: project.seoTitle || project.title,
-  //   description: project.seoDescription || project.description,
-  //   ogDescription: project.seoDescription || project.description,
-  //   ogImage: project.images[1],
-  //   twitterCard: 'summary_large_image',
-  // });
-
   const siteBase = config.public.siteUrl || config.public.wordpressBaseUrl || '';
   const pageUrl = siteBase ? new URL(route.fullPath || '/', siteBase).toString() : route.fullPath || '';
 
@@ -227,6 +233,9 @@
   // base meta (title/desc/og/twitter)
   useHead({
     title: project.seoTitle || project.title,
+    link: [
+      { rel: 'canonical', href: pageUrl }
+    ],
     meta: [
       { name: 'description', content: project.seoDescription || plainDescription },
 

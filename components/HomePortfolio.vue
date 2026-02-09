@@ -57,60 +57,65 @@
     method: 'post',
     body: {
         query: `
-            query portfolioPosts {
-            posts(where: {categoryName: "portfolio"}) {
-                nodes {
-                content
-                author {
-                    node {
-                    nickname
-                    }
-                }
-                portfolioProjects {
-                    githubLink
-                    imageUrls
-                    websiteLink
-                }
-                date
-                featuredImage {
-                    node {
-                    sourceUrl
-                    }
-                }
-                title
-                slug
-                tags {
+            query Projects {
+                projects {
                     nodes {
-                    name
+                    slug
+                    databaseId
+                    content
+                    portfolioProjects {
+                        githubLink
+                        imageUrls
+                        websiteLink
+                        collaborator1 {
+                            name
+                            link
+                        }
+                        collaborator2 {
+                            name
+                            link
+                        }
+                        client
+                        year
+                    }
+                    postSeo {
+                        seoTitle
+                        seoDescription
+                    }
+                    date
+                    featuredImage {
+                        node {
+                            sourceUrl
+                        }
+                    }
+                    title
+                    tags {
+                        nodes {
+                            name
+                        }
+                    }
+                    databaseId
+                    categories {
+                        nodes {
+                        name
+                        }
+                    }
+                    }
+                    pageInfo {
+                        endCursor
+                        startCursor
+                        hasNextPage
+                        hasPreviousPage
                     }
                 }
-                categories {
-                    nodes {
-                    name
-                    }
-                }
-                databaseId
-                }
-                pageInfo {
-                    endCursor
-                    startCursor
-                    hasNextPage
-                    hasPreviousPage
-                }
-            }
             }`
     },
-    transform(data){
-        return data.data.posts.nodes.map(post => ({
+        transform(data){
+        return data.data.projects.nodes.map(post => ({
             ...post,
             images: post.featuredImage?.node?.sourceUrl ? [post.featuredImage.node.sourceUrl] : [],
             technologies: post.tags?.nodes?.map(tag => tag.name) || [],
-            categories: post.categories?.nodes
-                ?.filter(cat => {
-                    const lowerName = cat.name.toLowerCase().trim();
-                    return lowerName !== 'portfolio' && lowerName !== 'blog';
-                })
-                .map(cat => cat.name) || []
+            categories: post.categories?.nodes?.map(cat => cat.name) || []
         }));
     }
     });

@@ -48,6 +48,7 @@ export default defineNuxtConfig({
       wordpressBaseUrl: process.env.DB_BASE_LINK,
       siteName: process.env.SITE_NAME || 'DeJa - Designer & Web developer',
       siteLocale: process.env.SITE_LOCALE || 'en_US',
+      siteUrl: process.env.SITE_URL || 'http://localhost:8000'
     }
   }
 })

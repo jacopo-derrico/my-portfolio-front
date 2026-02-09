@@ -6,10 +6,10 @@
           <IconsBackArrow/> back</a>
       </div>
       <h2 class="text-button lowercase mb-2">// {{ project.title }}</h2>
-      <span v-if="project.date" class="text-primary secondary-font me-6">{{ project.date }}</span>
+      <span v-if="project.year" class="text-primary secondary-font me-6">{{ project.year }}</span>
       <span v-if="project.company" class="text-primary secondary-font">{{ project.company }}</span>
       <div v-if="project.collaborators" class="mt-3">
-        <span v-for="(collab) in project.collaborators"  :key="collab.indexOf">
+        <span v-for="(collab, i) in project.collaborators" :key="i">
           <a :href="`${collab.url}`" rel="noreferrer noopener" target="_blank" class="text-secondary secondary-font">{{ collab.name }}</a>
         </span>
       </div>
@@ -24,7 +24,8 @@
         </span>
       </div>
       <div>
-        <p class="text-secondary mt-12">
+        <div v-if="project.isWordPressPost" class="text-secondary mt-12 prose prose-invert max-w-none" v-html="project.description"></div>
+        <p v-else class="text-secondary mt-12">
           {{ project.description }}
         </p>
       </div>
@@ -70,10 +71,117 @@
   import { useRoute } from 'vue-router'
 
   const route = useRoute()
+  const config = useRuntimeConfig();
 
-  const portfolio = usePortfolioStore();
-  const slug = route.params.slug;
-  const project = portfolio.projects.find(proj => proj.slug === slug);
+  const slug = route.params.slug; 
+  let project = ref(null);
+  
+  // fetch projects from WordPress
+  const { data: postData } = await useFetch(config.public.wordpressUrl, {
+    method: 'post',
+      body: {
+        query: `
+          query ProjectBySlug($slug: ID!) {
+            project(id: $slug, idType: SLUG) {
+              id
+              title
+              slug
+              date
+              content
+              databaseId
+              featuredImage {
+                node {
+                  sourceUrl
+                }
+              }
+              tags {
+                nodes {
+                  name
+                }
+              }
+              categories {
+                nodes {
+                  name
+                }
+              }
+              portfolioProjects {
+                githubLink
+                imageUrls
+                websiteLink
+                collaborator1 {
+                  name
+                  link
+                }
+                collaborator2 {
+                  name
+                  link
+                }
+                client
+                year
+              }
+              postSeo {
+                seoTitle
+                seoDescription
+              }
+            }
+          }
+        `,
+        variables: {
+          slug: slug
+        }
+      },
+      transform(data) {
+        return data.data.project;
+      }
+    });
+    
+    if (postData.value) {
+      // Transform WordPress post to match portfolio project structure
+      project = {
+        title: postData.value.title,
+        slug: postData.value.slug,
+        date: new Date(postData.value.date).toLocaleDateString(),
+        description: postData.value.content,
+        cover: postData.value.featuredImage?.node?.sourceUrl || null,
+        images: (postData.value.portfolioProjects?.imageUrls || '')
+                  .split(', ')
+                  .filter(e => e !== '')
+                  .map(e => config.public.wordpressBaseUrl + e),
+        githubUrl: postData.value.portfolioProjects?.githubLink,
+        demoUrl: postData.value.portfolioProjects?.websiteLink,
+        technologies: postData.value.tags?.nodes?.map(tag => tag.name) || [],
+        categories: postData.value.categories?.nodes
+              ?.filter(cat => {
+                  const lowerName = cat.name.toLowerCase().trim();
+                  return lowerName !== 'portfolio';
+              })
+              .map(cat => cat.name) || [],
+        company: postData.value.portfolioProjects?.client || '',
+        collaborators: [
+          postData.value.portfolioProjects?.collaborator1?.name ? {
+            name: postData.value.portfolioProjects.collaborator1.name,
+            url: postData.value.portfolioProjects.collaborator1.link
+          } : null,
+          postData.value.portfolioProjects?.collaborator2?.name ? {
+            name: postData.value.portfolioProjects.collaborator2.name,
+            url: postData.value.portfolioProjects.collaborator2.link
+          } : null,
+        ].filter(Boolean),
+        year: postData.value.portfolioProjects?.year || '',
+        isWordPressPost: true,
+        seoTitle: postData.value.seoTitle || '',
+        seoDescription: postData.value.seoDescription || ''
+      };
+    }
+  
+  // If project not found in portfolio store or WordPress, show 404
+  if (!project) {
+    throw createError({
+      statusCode: 404,
+      statusMessage: 'Project not found'
+    });
+  }
+  
   const wideImages = ref([]);
 
   // handle wider images based on aspect ratio
@@ -103,14 +211,97 @@
   };
   const onHide = () => (visibleRef.value = false);
 
-  useSeoMeta({
-    title: project.title,
-    ogTitle: project.title,
-    description: project.description,
-    ogDescription: project.description,
-    ogImage: project.images[1],
-    twitterCard: 'summary_large_image',
+  const siteBase = config.public.siteUrl || config.public.wordpressBaseUrl || '';
+  const pageUrl = siteBase ? new URL(route.fullPath || '/', siteBase).toString() : route.fullPath || '';
+
+  const ogImage = project.cover || (project.images && project.images.length ? project.images[0] : null);
+  const imageAlt = `${project.seoTitle || project.title} cover image`;
+
+  // plain description for meta and JSON-LD (strip HTML)
+  const stripHtml = (html = '') => {
+    return html.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim().slice(0, 320);
+  };
+  const plainDescription = stripHtml(project.seoDescription || '') || stripHtml(project.description || '');
+
+  // base meta (title/desc/og/twitter)
+  useHead({
+    title: project.seoTitle || project.title,
+    link: [
+      { rel: 'canonical', href: pageUrl }
+    ],
+    meta: [
+      { name: 'description', content: project.seoDescription || plainDescription },
+
+      // Open Graph basics
+      { property: 'og:locale', content: config.public.siteLocale || 'en_US' },
+      { property: 'og:site_name', content: config.public.siteName || '' },
+      { property: 'og:type', content: project.isWordPressPost ? 'article' : 'website' },
+      { property: 'og:title', content: project.seoTitle || project.title },
+      { property: 'og:description', content: project.seoDescription || plainDescription },
+      ...(ogImage ? [{ property: 'og:image', content: ogImage }] : []),
+      ...(ogImage ? [{ property: 'og:image:alt', content: imageAlt }] : []),
+      { property: 'og:url', content: pageUrl },
+
+      // Twitter
+      { name: 'twitter:card', content: 'summary_large_image' },
+      { name: 'twitter:title', content: project.seoTitle || project.title },
+      { name: 'twitter:description', content: project.seoDescription || plainDescription },
+      ...(ogImage ? [{ name: 'twitter:image', content: ogImage }] : []),
+      ...(ogImage ? [{ name: 'twitter:image:alt', content: imageAlt }] : []),
+
+      // Article-specific metadata (if WP post)
+      ...(project.isWordPressPost && postData?.value?.date ? [
+        { property: 'article:published_time', content: new Date(postData.value.date).toISOString() }
+      ] : []),
+      ...(project.isWordPressPost && postData?.value?.modified ? [
+        { property: 'article:modified_time', content: new Date(postData.value.modified).toISOString() }
+      ] : []),
+      ...(project.technologies?.length ? [{ property: 'article:tag', content: project.technologies.join(', ') }] : []),
+      ...(project.company ? [{ property: 'article:author', content: project.company }] : []),
+    ],
+    // Add JSON-LD
+    script: [
+      {
+        type: 'application/ld+json',
+        children: JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': project.isWordPressPost ? 'Article' : 'WebPage',
+          headline: project.seoTitle || project.title,
+          description: project.seoDescription || plainDescription,
+          image: ogImage ? [ogImage] : undefined,
+          author: project.company ? { '@type': 'Person', name: project.company } : undefined,
+          datePublished: project.isWordPressPost && postData?.value?.date ? new Date(postData.value.date).toISOString() : undefined,
+          dateModified: project.isWordPressPost && postData?.value?.modified ? new Date(postData.value.modified).toISOString() : undefined,
+          mainEntityOfPage: { '@type': 'WebPage', '@id': pageUrl },
+          publisher: config.public.siteName ? {
+            '@type': 'Organization',
+            name: config.public.siteName
+          } : undefined
+        })
+      }
+    ]
   });
+
+  // attempt to fetch image dimensions and update meta with og:image:width/height (improves some social previews)
+  if (ogImage && process.client) {
+    const loadImageDims = (src) => new Promise((res) => {
+      const img = new Image();
+      img.onload = () => res({ width: img.naturalWidth, height: img.naturalHeight });
+      img.onerror = () => res(null);
+      img.src = src;
+    });
+
+    loadImageDims(ogImage).then(dim => {
+      if (dim) {
+        useHead({
+          meta: [
+            { property: 'og:image:width', content: String(dim.width) },
+            { property: 'og:image:height', content: String(dim.height) }
+          ]
+        });
+      }
+    });
+  }
 
 </script>
 

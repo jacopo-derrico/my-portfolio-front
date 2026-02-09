@@ -73,73 +73,67 @@
   const route = useRoute()
   const config = useRuntimeConfig();
 
-  const portfolio = usePortfolioStore();
-  const slug = route.params.slug;
+  const slug = route.params.slug; 
+  let project = ref(null);
   
-  // Try to find project in portfolio store first
-  let project = portfolio.projects.find(proj => proj.slug === slug);
-
-  let postData;
-  
-  // If not found in portfolio, fetch from WordPress
-  if (!project) {
-      const { data: postData } = await useFetch(config.public.wordpressUrl, {
-          method: 'post',
-          body: {
-            query: `
-              query ProjectBySlug($slug: ID!) {
-                project(id: $slug, idType: SLUG) {
-                  id
-                  title
-                  slug
-                  date
-                  content
-                  databaseId
-                  featuredImage {
-                    node {
-                      sourceUrl
-                    }
-                  }
-                  tags {
-                    nodes {
-                      name
-                    }
-                  }
-                  categories {
-                    nodes {
-                      name
-                    }
-                  }
-                  portfolioProjects {
-                    githubLink
-                    imageUrls
-                    websiteLink
-                    collaborator1 {
-                      name
-                      link
-                    }
-                    collaborator2 {
-                      name
-                      link
-                    }
-                    client
-                    year
-                  }
-                  postSeo {
-                    seoTitle
-                    seoDescription
-                  }
+  // fetch projects from WordPress
+  const { data: postData } = await useFetch(config.public.wordpressUrl, {
+    method: 'post',
+      body: {
+        query: `
+          query ProjectBySlug($slug: ID!) {
+            project(id: $slug, idType: SLUG) {
+              id
+              title
+              slug
+              date
+              content
+              databaseId
+              featuredImage {
+                node {
+                  sourceUrl
                 }
               }
-            `,
-            variables: {
-              slug: slug
+              tags {
+                nodes {
+                  name
+                }
+              }
+              categories {
+                nodes {
+                  name
+                }
+              }
+              portfolioProjects {
+                githubLink
+                imageUrls
+                websiteLink
+                collaborator1 {
+                  name
+                  link
+                }
+                collaborator2 {
+                  name
+                  link
+                }
+                client
+                year
+              }
+              postSeo {
+                seoTitle
+                seoDescription
+              }
             }
-          },
-          transform(data) {
-            return data.data.project;
           }
-        });
+        `,
+        variables: {
+          slug: slug
+        }
+      },
+      transform(data) {
+        return data.data.project;
+      }
+    });
     
     if (postData.value) {
       // Transform WordPress post to match portfolio project structure
@@ -179,7 +173,6 @@
         seoDescription: postData.value.seoDescription || ''
       };
     }
-  }
   
   // If project not found in portfolio store or WordPress, show 404
   if (!project) {

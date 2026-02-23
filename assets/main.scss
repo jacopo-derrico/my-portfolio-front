@@ -256,6 +256,14 @@ header {
   animation: rainbow-animation 35s linear infinite;
 }
 
+.wp-link:hover {
+  background-image: 
+    linear-gradient(to right, #3758E8,#5a73ff); 
+  -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;  
+  animation: rainbow-animation 35s linear infinite;
+}
+
 @keyframes rainbow-animation {
     to {
         background-position: 45vh;

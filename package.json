@@ -18,7 +18,7 @@
     "@nuxtjs/tailwindcss": "^6.12.1",
     "@pinia/nuxt": "^0.5.5",
     "axios": "^1.7.7",
-    "nuxt": "^4.0.0",
+    "nuxt": "^3.21.1",
     "nuxt-easy-lightbox": "^1.0.2",
     "pinia": "^2.2.4",
     "vue": "^3.5.0",

@@ -1,7 +1,7 @@
 <template>
     <section id="portfolio-section" data-section-number="03" class="mx-auto py-10 my-[200px] lg:py-0">
         <h3 class="text-button mb-10">// portfolio</h3>
-        <div class="columns-2 lg:columns-3 3xl:columns-4 gap-4 space-y-4">
+        <div class="columns-2 lg:columns-3 3xl:columns-4 gap-4 space-y-4 ">
             <!-- wp test -->
             <div v-for="post in data" :key="post.slug">
                 <NuxtLink class="relative hover-info block mb-4 overflow-hidden rounded-xl" :to="`/projects/${post.slug}`">

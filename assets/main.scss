@@ -103,6 +103,14 @@ a, button, .cursor-hover {
   fill: $text-primary;
 }
 
+.bw-image {
+  filter: grayscale(100%);
+}
+
+.bw-image:hover {
+  filter: grayscale(0%);
+}
+
 // buttons -------------------------------------------------------------------
 .btn-style {
   --b: 2px;

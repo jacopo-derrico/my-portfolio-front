@@ -3,7 +3,14 @@ import { defineStore } from 'pinia';
 export const useExperienceStore = defineStore('experienceStore', () => {
   let experience = [
     {
-      "year": "2025-present",
+      "year": "2026-present",
+      "jobTitle": "Web Developer",
+      "company": "GBS",
+      "description":
+        "Web developer, multiple projects, Wordpress, WooCommerce, SEO optimisation, custom theme"
+    },
+    {
+      "year": "2025",
       "jobTitle": "Web Developer",
       "company": "Unit-Growth",
       "description":

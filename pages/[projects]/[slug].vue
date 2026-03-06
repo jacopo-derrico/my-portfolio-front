@@ -67,7 +67,6 @@
 
 <script setup>
   import { ref, watch } from 'vue'
-  import { usePortfolioStore } from '~/store/portfolio'
   import { useRoute } from 'vue-router'
 
   const route = useRoute()

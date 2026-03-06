@@ -52,7 +52,7 @@ h3 {
 
 h6 {
   font-family: RobotoMono;
-  font-size: 20px;
+  font-size: 16px;
 }
 
 a:hover {
@@ -249,6 +249,7 @@ header {
 .figma-link:hover {
   background-image: 
     linear-gradient(to right, #FF3837,#FF7238,#8750FF,#00B6FF,#27CB71); 
+  background-clip: text;
   -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;  
   animation: rainbow-animation 35s linear infinite;
@@ -257,6 +258,7 @@ header {
 .nuxt-link:hover {
   background-image: 
     linear-gradient(to right, #02DC82,#030617); 
+  background-clip: text;
   -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;  
   animation: rainbow-animation 35s linear infinite;
@@ -265,6 +267,7 @@ header {
 .wp-link:hover {
   background-image: 
     linear-gradient(to right, #3758E8,#5a73ff); 
+  background-clip: text;
   -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;  
   animation: rainbow-animation 35s linear infinite;
